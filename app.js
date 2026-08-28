@@ -1,4 +1,3 @@
-
 import express from 'express';
 //leer el archivo .env
 import {configDotenv} from "dotenv"
@@ -21,7 +20,7 @@ app.get("/otraruta",(req, res)=>{
 })
 
 app.get("/ruta2",(req, res)=>{
-    res.json({"nombre": "sebastian", "apellido":"acosta","Cargo":"Aprenediz"})
+    res.json({"nombre": "Lizeth", "apellido":"lopez","Cargo":"Aprenediz"})
 })
 
 app.get("/ruta3/:aprendiz/:otrodato",(req, res)=>{
@@ -29,7 +28,6 @@ app.get("/ruta3/:aprendiz/:otrodato",(req, res)=>{
     const otro_dato = req.params.otrodato
     res.json({"nombre": dato_aprendiz, "otro": otro_dato})
 })
-
 
 app.get("/ruta4", (req, res)=>{
     //capturar el parametro de consulta query
