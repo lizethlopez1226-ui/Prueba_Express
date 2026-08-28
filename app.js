@@ -6,6 +6,8 @@ configDotenv()
 
 const app = express();
 const port = process.env.PUERTO || 3030
+//uso de middleware body-parse
+app.use(express.json())
 
 app.get("/", (_, res) => {
 res.send('Aprendiendo express,ficha 3407181, programa ADSO, 31 de Julio');
@@ -28,6 +30,7 @@ app.get("/ruta3/:aprendiz/:otrodato",(req, res)=>{
     res.json({"nombre": dato_aprendiz, "otro": otro_dato})
 })
 
+
 app.get("/ruta4", (req, res)=>{
     //capturar el parametro de consulta query
     const orden = req.query.orden || "sin ordenar"
@@ -36,6 +39,35 @@ app.get("/ruta4", (req, res)=>{
         <p>El listado esta en orden ${orden}</p>
         <p>Pagina: ${pagina}</P>
         `)
+})
+
+//endpoint para envio de datos forato JSON
+app.post("/ruta2", (req, res)=>{
+    const todosDatos = req.body
+    const name = req.body.nombre
+    const lastname = req.body.cargo
+    res.status (201).json({Datos: todosDatos, nombre: name, cargo: lastname})
+})
+
+//ACTIVIDAD: Endpoint de validacion y mensaje sobre datos no encontrados 
+app.post("/login", (req, res)=>{
+    const usuario = req.body.usuario
+    const perfil = req.body.perfil
+    const contraseña = req.body.contraseña
+    //validacion de datos
+    if(!usuario || !perfil || !contraseña){
+        return res.send("Datos incompletos")
+    }
+
+    //Validar los datos y dar acceso o bienvenida
+    if (perfil === "admin"){
+        return res.send(`Bienvenido administrador: ${usuario}`)
+    }
+    if (perfil === "user"){
+        return res.send(`Bienvenido user: ${usuario}`)
+    }
+    //Si el perfil no existe
+    return res.send("El perfil no existe. Acceso denegad")
 })
 
 app.listen(port, function(){
